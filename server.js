@@ -4,12 +4,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({path: './config.env'});
 
 
 const authRouter = require('./routes/auth');
-
+const categoryRouter = require('./routes/category');
+const productRouter = require('./routes/product');
 
 const app = express();
 
@@ -31,6 +33,7 @@ mongoose.connect(DB, {
 if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
 }
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -38,7 +41,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //Routes
 app.use('/auth', authRouter);
-
+app.use('/categories', categoryRouter);
+app.use('/product', productRouter);
 
 
 
