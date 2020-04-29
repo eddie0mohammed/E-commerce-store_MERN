@@ -38,9 +38,9 @@ const productSchema = new mongoose.Schema({
         default: 0
     },
 
-    photo: {
-        data: Buffer,
-        contentType: String
+    productImageURL: {
+        type: String,
+        required: [true, 'Product image is required']
     },
 
     shipping: {

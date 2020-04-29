@@ -12,13 +12,13 @@ const router = express.Router();
 // @path    POST /product/new
 // @desc    Create new product
 // @access  Admin
-router.post('/new', checkAuth, isAdmin, productController.createProduct);
+router.post('/new', checkAuth, isAdmin, productController.multerMiddleware, productController.createProduct);
 
 
-// @path    POST /product/edit/:productId
+// @path    PATCH /product/edit/:productId
 // @desc    Update product
 // @access  Admin
-router.post('/edit/:productId', checkAuth, isAdmin, productController.updateProduct);
+router.patch('/edit/:productId', checkAuth, isAdmin, productController.multerMiddleware, productController.updateProduct);
 
 
 // @path    DELETE /product/delete/:productId

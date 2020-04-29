@@ -1,6 +1,26 @@
 
 const Product = require('../models/product');
 
+const productImageUpload = require('../utils/productImageUpload');
+const deleteImage = require('../utils/deleteProductImage');
+
+
+//multer middleware 
+const multerMiddleware = (req, res, next) => {
+    productImageUpload(req, res, (err) => {
+        
+        if (err){
+            // console.log(err)
+            return res.status(400).json({
+                status: 'fail',
+                error: err
+            });
+        }else{
+            next();
+        }
+    })
+}
+
 
 const createProduct = async (req, res, next) => {
 
@@ -30,10 +50,19 @@ const createProduct = async (req, res, next) => {
         });
         
         if (req.body.quantity){
-            newProduct.quatity = req.body.quantity;
+            newProduct.quantity = req.body.quantity;
         }
         if (req.body.shipping){
             newProduct.shipping = req.body.shipping;
+        }
+
+        if (req.file){
+            newProduct.productImageURL = req.file.filename;
+        }else{
+            return res.status(400).json({
+                status: 'fail',
+                error: 'Product image is required'
+            });
         }
 
         await newProduct.save()
@@ -90,6 +119,12 @@ const updateProduct = async (req, res, next) => {
             body.shipping = req.body.shipping;
         }
 
+        if (req.file){
+
+            deleteImage(exists.productImageURL);
+            body.productImageURL = req.file.filename;
+        }
+
 
         const updatedProduct = await Product.findByIdAndUpdate(productId, body, {new: true, runValidators: true});
 
@@ -124,6 +159,7 @@ const deleteProduct = async (req, res, next) => {
         }
 
         await Product.findByIdAndDelete(productId);
+        deleteImage(exists.productImageURL);
         res.status(200).json({
             status: 'success',
             message: 'Successfully deleted product'
@@ -145,5 +181,6 @@ module.exports = {
     createProduct: createProduct,
     updateProduct: updateProduct,
     deleteProduct: deleteProduct,
+    multerMiddleware: multerMiddleware,
 
 }

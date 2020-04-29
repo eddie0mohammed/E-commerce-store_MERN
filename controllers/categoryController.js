@@ -71,7 +71,7 @@ const updateCategory = async (req, res, next) => {
         }
 
         const body = {name: req.body.name};
-        const updatedCategory = await Category.findByIdAndUpdate(category, body, {new: true, runValidators: true});
+        const updatedCategory = await Category.findByIdAndUpdate(categoryId, body, {new: true, runValidators: true});
 
         res.status(201).json({
             status: 'success',

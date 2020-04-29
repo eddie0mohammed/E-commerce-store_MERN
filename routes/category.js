@@ -15,12 +15,12 @@ const router = express.Router();
 router.post('/new', checkAuth, isAdmin, categoryController.newCategory);
 
 
-// @path    POST /categories/edit/:categoryId
+// @path    PATCH /categories/edit/:categoryId
 // @desc    Edit category
 // @access  Private + admin
-router.post('/edit/:categoryId', checkAuth, isAdmin, categoryController.updateCategory);
+router.patch('/edit/:categoryId', checkAuth, isAdmin, categoryController.updateCategory);
 
-// @path    POST /categories/delete/:categoryId
+// @path    DELETE /categories/delete/:categoryId
 // @desc    Delete Category
 // @access  Private + admin
 router.delete('/delete/:categoryId', checkAuth, isAdmin, categoryController.deleteCategory);
