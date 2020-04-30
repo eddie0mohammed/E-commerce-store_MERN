@@ -179,6 +179,76 @@ const getAllUsers = async (req, res, next) => {
 }
 
 
+// Get Specific User 
+const getSpecificUser = async (req, res, next) => {
+
+    try{
+        const userId = req.params.userId;
+        const user = await User.findOne({_id: userId});
+        if (!user){
+            return res.status(400).json({
+                status: 'fail',
+                error: 'User does not exist'
+            });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                user: user
+            }
+        });
+
+    }catch(err){
+        console.log(err);
+        return res.status(400).json({
+            status: 'fail',
+            error: err
+        });
+    }
+}
+
+
+//update user
+const updateUser = async (req, res, next) => {
+
+    try{
+        const userId = req.user.id;
+        const user = await User.findOne({_id: userId});
+        if (!user){
+            return res.status(400).json({
+                status: 'fail',
+                error: 'user not found'
+            });
+        }
+
+        const body = {};
+        if (req.body.name){
+            body.name = req.body.name;
+        }
+        if (req.body.about){
+            body.about = req.body.about;
+        }
+        
+        const updatedUser = await User.findByIdAndUpdate(userId, body, {new: true, runValidators: true});
+
+        res.status(201).json({
+            status: 'success',
+            data: {
+                user: updatedUser
+            }
+        });
+
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status: 'fail',
+            error: err
+        });
+    }
+}
+
+
 
 
 
@@ -187,5 +257,7 @@ module.exports = {
     login: login,
     getUser: getUser,
     getAllUsers: getAllUsers,
+    getSpecificUser: getSpecificUser,
+    updateUser: updateUser,
 
 };

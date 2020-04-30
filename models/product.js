@@ -38,6 +38,11 @@ const productSchema = new mongoose.Schema({
         default: 0
     },
 
+    sold: {
+        type: Number,
+        default: 0
+    },
+
     productImageURL: {
         type: String,
         required: [true, 'Product image is required']

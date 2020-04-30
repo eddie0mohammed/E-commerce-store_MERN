@@ -32,6 +32,16 @@ router.get('/getuser', checkAuth, authController.getUser);
 router.get('/getallusers', checkAuth, checkIsAdmin, authController.getAllUsers);
 
 
+// @route   GET /auth/user/:userId
+// @desc    Get specific user
+// @access  Private
+router.get('/user/:userId', checkAuth, authController.getSpecificUser);
+
+// @route   PATCH /auth/user
+// @desc    Update user info
+// @access  Private
+router.patch('/user', checkAuth, authController.updateUser);
+
 
 
 

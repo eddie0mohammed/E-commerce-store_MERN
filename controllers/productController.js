@@ -176,11 +176,66 @@ const deleteProduct = async (req, res, next) => {
 
 
 
+const getAllProducts = async (req, res, next) => {
+
+    try{
+        const products = await Product.find()
+                                .populate('category');
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                products: products
+            }
+        });
+
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status: 'fail',
+            error: err
+        });
+    }
+}
+
+const getSpecificProduct = async (req, res, next) => {
+
+    try{
+
+        const productId = req.params.productId;
+        const product = await Product.findOne({_id: productId})
+                                        .populate('category');
+        if (!product){
+            return res.status(400).json({
+                status: 'fail',
+                error: 'Product not found'
+            });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                product: product
+            }
+        });
+
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status: 'fail',
+            error: err
+        });
+    }
+}
+
+
 
 module.exports = {
     createProduct: createProduct,
     updateProduct: updateProduct,
     deleteProduct: deleteProduct,
     multerMiddleware: multerMiddleware,
+    getAllProducts: getAllProducts,
+    getSpecificProduct: getSpecificProduct,
 
 }

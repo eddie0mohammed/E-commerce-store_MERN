@@ -119,6 +119,26 @@ const deleteCategory = async (req, res, next) => {
 }
 
 
+const getAllCategories = async (req, res, next) => {
+
+    try{
+        const categories = await Category.find();
+        res.status(200).json({
+            status: 'success',
+            data: {
+                categories: categories
+            }
+        });
+
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status: 'fail',
+            error: err
+        });
+    }
+}
+
 
 
 module.exports = {
@@ -126,4 +146,5 @@ module.exports = {
     newCategory: newCategory,
     updateCategory: updateCategory,
     deleteCategory:  deleteCategory,
+    getAllCategories: getAllCategories,
 }

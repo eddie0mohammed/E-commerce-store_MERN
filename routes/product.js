@@ -27,7 +27,15 @@ router.patch('/edit/:productId', checkAuth, isAdmin, productController.multerMid
 router.delete('/delete/:productId', checkAuth, isAdmin, productController.deleteProduct);
 
 
+// @path    GET /product
+// @desc    Get all products
+// @access  Public
+router.get('/', productController.getAllProducts);
 
 
+// @path    GET /product/:productId
+// @desc    Get specific product
+// @access  Public
+router.get('/:productId', productController.getSpecificProduct);
 
 module.exports = router;

@@ -26,6 +26,12 @@ router.patch('/edit/:categoryId', checkAuth, isAdmin, categoryController.updateC
 router.delete('/delete/:categoryId', checkAuth, isAdmin, categoryController.deleteCategory);
 
 
+// @path    GET /categories
+// @desc    Get all categories
+// @access  Public
+router.get('/', categoryController.getAllCategories);
+
+
 
 
 module.exports = router;
