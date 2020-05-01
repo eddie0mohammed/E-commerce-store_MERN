@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 
 import {Switch, Route} from 'react-router-dom';
+import {connect} from 'react-redux';
+
+import * as authActionCreators from './Redux/Actions/AuthActionCreators';
 
 import Header from './components/Header/Header';
 
@@ -14,7 +17,21 @@ import ResetPassword from './pages/auth/ResetPassword/ResetPassword';
 import ResetMyPassword from './pages/auth/ResetMyPassword/ResetMyPassword';
 
 
-function App() {
+const App = (props) => {
+
+  useEffect(() => {
+    
+    fetchUser();
+  });
+
+  const fetchUser = async () => {
+    const res = await props.getUser();
+    if (res.status === 'fail'){
+      localStorage.removeItem('token');
+    }
+  }
+
+
   return (
     <div className="App">
 
@@ -45,4 +62,16 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: () => dispatch(authActionCreators.getUser()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -3,6 +3,9 @@ import React, {useState} from 'react';
 import styles from './Login.module.css';
 
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+
+import * as authActionCreators from '../../../Redux/Actions/AuthActionCreators';
 
 const Login = (props) => {
 
@@ -15,9 +18,19 @@ const Login = (props) => {
         setFormValues({...formValues, [e.target.name]: e.target.value});
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);
+        // console.log(formValues);
+
+        if (formValues.email && formValues.password){
+
+            const res = await props.login(formValues.email, formValues.password);
+            // console.log(res);
+            if (res.status === 'success'){
+                props.history.push('/');
+            }
+        }
+
     }
 
     return (
@@ -32,6 +45,10 @@ const Login = (props) => {
                 <label htmlFor="password" className={styles.label}>Password</label>
                 <input className={styles.input} type="password" name='password' placeholder='Password' onChange={handleInputChange}/>
 
+                {   props.error && 
+                    <p style={{textAlign:'center', fontSize: '1.4rem', color: 'red'}}>{props.error}</p>
+                }
+
                 <input type="submit" value="Submit" className={styles.submit}/>
                 
                 <Link to='/auth/request-resetpassword' className={styles.link}>Forgot your password?</Link>
@@ -43,4 +60,16 @@ const Login = (props) => {
     )
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+    return {
+        error: state.error.error,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (email, password) => dispatch(authActionCreators.login(email, password)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

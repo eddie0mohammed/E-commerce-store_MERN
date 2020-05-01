@@ -26,6 +26,7 @@
     padding-left: 1rem;
     color:white;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .link:hover{
