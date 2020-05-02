@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 
 import styles from './ResetPassword.module.css';
 
+import {connect} from 'react-redux';
+
+import * as authActionCreators from '../../../Redux/Actions/AuthActionCreators';
+
 const ResetPassword = (props) => {
 
     const [formValues, setFormValues] = useState({
@@ -15,9 +19,18 @@ const ResetPassword = (props) => {
         setFormValues({...formValues, [e.target.name]: e.target.value});
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);
+        // console.log(formValues);
+        if (formValues.password && formValues.confirmPassword && formValues.password === formValues.confirmPassword){
+            
+            const res = await props.resetPassword(formValues.password, props.match.params.token);
+
+            if (res.status === 'success'){
+                props.history.push('/auth/login');
+            }
+
+        }
     }
 
     return (
@@ -33,6 +46,9 @@ const ResetPassword = (props) => {
                 <label htmlFor="confirmPassword" className={styles.label}>Confirm Password</label>
                 <input className={styles.input} type="password" name='confirmPassword' placeholder='Confirm Password' onChange={handleInputChange}/>
 
+                {props.error && 
+                    <p style={{color: 'red', textAlign: 'center', fontSize: '1.4rem'}}>{props.error}</p>
+                }
                 <input type="submit" value="Submit" className={styles.submit}/>
     
                 
@@ -43,4 +59,16 @@ const ResetPassword = (props) => {
     )
 }
 
-export default ResetPassword;
+const mapStateToProps = (state) => {
+    return {
+        error: state.error.error
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        resetPassword: (password, token) => dispatch(authActionCreators.resetPassword(password, token)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

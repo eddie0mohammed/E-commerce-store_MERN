@@ -1,0 +1,62 @@
+
+.container{
+    width: 100%;
+    padding: 1rem 5rem;
+}
+
+.heading{
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.row{
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.leftContainer{
+    width: 24%;
+}
+
+.link{
+    text-decoration: none;
+    color: blue;
+}
+.link:hover{
+    text-decoration: underline;
+}
+
+.rightContainer{
+    width: 73%;
+    
+}
+
+.table{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    margin-bottom: 5rem;
+}
+
+.tableHead{
+    width: 100%;
+    background: lightgray;
+    font-size: 2rem;
+    padding: 1rem;
+    font-weight: 600;
+}
+
+.content{
+    font-size: 1.7rem;
+    padding: 1rem;
+
+}
+
+.content:not(:last-child){
+    border-bottom: 1px solid lightgray;
+}

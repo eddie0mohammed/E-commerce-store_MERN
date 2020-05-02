@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 
 import styles from './ResetMyPassword.module.css';
 
+import {connect} from 'react-redux';
+
+import * as authActionCreators from '../../../Redux/Actions/AuthActionCreators';
+
 const ResetMyPassword = (props) => {
 
     const [formValues, setFormValues] = useState({
@@ -15,9 +19,19 @@ const ResetMyPassword = (props) => {
         setFormValues({...formValues, [e.target.name]: e.target.value});
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formValues);
+        // console.log(formValues);
+
+        if (formValues.currentPassword && formValues.password && formValues.confirmPassword){
+            if (formValues.password === formValues.confirmPassword){
+                const res = await props.changePassword(formValues.currentPassword, formValues.password);
+                 
+                if (res.status === 'success'){
+                    props.history.push('/auth/settings');
+                }
+            }
+        }
     }
 
     return (
@@ -35,6 +49,10 @@ const ResetMyPassword = (props) => {
                 <label htmlFor="confirmPassword" className={styles.label}>Confirm Password</label>
                 <input className={styles.input} type="password" name='confirmPassword' placeholder='Confirm Password' onChange={handleInputChange}/>
 
+                { props.error && 
+                    <p style={{color: 'red', textAlign: 'center', fontSize: '1.4rem'}}>{props.error}</p>
+                }
+
                 <input type="submit" value="Submit" className={styles.submit}/>
     
                 
@@ -45,4 +63,16 @@ const ResetMyPassword = (props) => {
     )
 }
 
-export default ResetMyPassword;
+const mapStateToProps = (state) => {
+    return {
+        error: state.error.error
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changePassword: (currentPassword, newPassword) => dispatch(authActionCreators.changePassword(currentPassword, newPassword)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetMyPassword);

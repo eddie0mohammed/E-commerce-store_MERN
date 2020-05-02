@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import styles from './Register.module.css';
 
@@ -8,6 +8,12 @@ import {connect} from 'react-redux';
 import * as authActionCreators from '../../../Redux/Actions/AuthActionCreators';
 
 const Register = (props) => {
+
+    useEffect(() => {
+        if (props.isAuthenticated){
+            props.history.push('/');
+        }
+    })
 
     const [formValues, setFormValues] = useState({
         name: '',
@@ -27,7 +33,7 @@ const Register = (props) => {
             const res = await props.register(name, email, password);
             // console.log(res);
             if (res.status === 'success'){
-                props.history.push('/auth/login');
+                props.history.push('/auth/confirm-email');
             }
         }
 
@@ -66,6 +72,7 @@ const Register = (props) => {
 const mapStateToProps = (state) => {
     return {
         error: state.error.error,
+        isAuthenticated: state.auth.isAuthenticated,
     }
 }
 

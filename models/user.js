@@ -41,6 +41,23 @@ const userSchema = new mongoose.Schema({
         default: []
     },
 
+    activationToken: {
+        type: String
+    },
+
+    active: {
+        type: Boolean,
+        default: false
+    },
+
+    passwordResetToken: {
+        type: String
+    },
+
+    passwordResetExpires: {
+        type: Date,
+    },
+
     createdAt: {
         type: Date,
         default: Date.now

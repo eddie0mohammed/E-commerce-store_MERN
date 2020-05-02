@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import styles from './Login.module.css';
 
@@ -8,6 +8,12 @@ import {connect} from 'react-redux';
 import * as authActionCreators from '../../../Redux/Actions/AuthActionCreators';
 
 const Login = (props) => {
+
+    useEffect(() => {
+        if (props.isAuthenticated){
+            props.history.push('/');
+        }
+    })
 
     const [formValues, setFormValues] = useState({
         email: '',
@@ -26,8 +32,8 @@ const Login = (props) => {
 
             const res = await props.login(formValues.email, formValues.password);
             // console.log(res);
-            if (res.status === 'success'){
-                props.history.push('/');
+            if (res.status === 'success'){    
+                props.history.push('/user/dashboard');
             }
         }
 
@@ -63,6 +69,8 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
     return {
         error: state.error.error,
+        user: state.auth.user,
+        isAuthenticated: state.auth.isAuthenticated,
     }
 }
 

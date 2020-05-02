@@ -4,10 +4,17 @@ import styles from './Header.module.css';
 
 import {NavLink, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 import * as authActionCreators from '../../Redux/Actions/AuthActionCreators';
 
 const Header = (props) => {
+
+    const handleLogout = () => {
+        props.logout();
+        props.history.push('/auth/login');
+    }
+
     return (
         <div className={styles.container}>
             
@@ -21,7 +28,10 @@ const Header = (props) => {
                     </>
                     :
                     <>
-                    <div className={styles.link} onClick={props.logout}>Logout</div>
+                    { props.user && props.user.role === 0 && <NavLink to='/user/dashboard' className={styles.link} activeClassName={styles.isActive}>Dashboard</NavLink> }
+                    { props.user && props.user.role === 1 && <NavLink to='/admin/dashboard' className={styles.link} activeClassName={styles.isActive}>Dashboard</NavLink> }
+                    <NavLink to='/auth/settings' className={styles.link} activeClassName={styles.isActive} >Settings</NavLink>
+                    <div className={styles.link} onClick={handleLogout}>Logout</div>
                     </>
                 }
 
@@ -34,6 +44,7 @@ const Header = (props) => {
 const mapStateToProps = (state) => {
     return {
         isAuthenticated: state.auth.isAuthenticated,
+        user: state.auth.user,
     }
 }
 
@@ -43,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
