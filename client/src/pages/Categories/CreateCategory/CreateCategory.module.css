@@ -1,0 +1,101 @@
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.formContainer{
+    width: 100%;
+    background: lightgray;
+    padding: 2rem 5rem;
+}
+
+.form{
+    width: 100%;
+}
+
+.label{
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 1rem 0;
+}
+
+.input{
+    width: 85%;
+    border: 1px solid lightgray;
+    padding: 1rem;
+    font-size: 1.6rem;
+    border-radius: 3px;
+    outline:none;
+}
+.input:focus{
+    border: 1px solid blue;
+}
+
+.submit{
+    width: 15%;
+    font-size: 1.6rem;
+    color: white;
+    background: green;
+    padding: 1rem;
+    outline: none;
+    cursor: pointer;
+    border:none;
+    border-radius: 3px;
+}
+
+
+
+.categoriesContainer{
+    width: 100%;
+    padding: 2rem 5rem;
+}
+
+.categoriesList{
+    width: 100%;
+    /* background: pink; */
+    list-style: none;
+    border: 1px solid lightgray;
+    padding: 1rem;
+    border-radius: 3px;
+}
+
+
+.category{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.6rem;
+}
+
+.category:not(:last-child){
+    border-bottom: 1px solid lightgray;
+}
+
+.icons{
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit{
+    cursor: pointer;
+    color: darkgoldenrod;
+}
+
+.edit:hover{
+    text-decoration: underline;
+}
+
+.delete{
+    cursor: pointer;
+    font-size: 2rem;
+    transition: 0.2s;
+}
+.delete:hover{
+    transform: scale(1.4);
+    color: red;
+}

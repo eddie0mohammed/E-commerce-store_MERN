@@ -22,6 +22,7 @@ const AdminDashboard = (props) => {
                             <p className={styles.tableHead}>Admin Links</p>
                             <p className={styles.content}><Link className={styles.link} to='/create/category'>Create Category</Link></p>
                             <p className={styles.content}><Link className={styles.link} to='/create/product'>Create Product</Link></p>
+                            <p className={styles.content}><Link className={styles.link} to='/products'>All Products</Link></p>
         
                         </div>
 

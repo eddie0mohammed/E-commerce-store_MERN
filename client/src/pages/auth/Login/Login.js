@@ -8,17 +8,17 @@ import {connect} from 'react-redux';
 import * as authActionCreators from '../../../Redux/Actions/AuthActionCreators';
 
 const Login = (props) => {
+    
+    const [formValues, setFormValues] = useState({
+        email: '',
+        password: ''
+    });
 
     useEffect(() => {
         if (props.isAuthenticated){
             props.history.push('/');
         }
     })
-
-    const [formValues, setFormValues] = useState({
-        email: '',
-        password: ''
-    });
 
     const handleInputChange = (e) => {
         setFormValues({...formValues, [e.target.name]: e.target.value});

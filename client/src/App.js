@@ -23,6 +23,11 @@ import ResetMyPassword from './pages/auth/ResetMyPassword/ResetMyPassword';
 import UserDashboard from './pages/Dashboard/UserDashboard/UserDashboard';
 import AdminDashboard from './pages/Dashboard/AdminDashboard/AdminDashboard';
 
+import CreateCategory from './pages/Categories/CreateCategory/CreateCategory';
+
+import CreateProduct from './pages/Product/CreateProduct/CreateProduct';
+import ViewAllProducts from './pages/Product/ViewAllProducts/ViewAllProducts';
+
 
 const App = (props) => {
 
@@ -59,6 +64,14 @@ const App = (props) => {
 
         <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
+
+        {/* <Route path='/create/category' exact component={CreateCategory} /> */}
+        <AdminRoute path='/create/category' exact component={CreateCategory} />
+
+        {/* <Route path='/create/product' exact component={CreateProduct} /> */}
+        <AdminRoute path='/create/product' exact component={CreateProduct} />
+
+        <Route path='/products' exact component={ViewAllProducts} />
 
 
 

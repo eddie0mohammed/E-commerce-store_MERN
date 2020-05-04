@@ -18,7 +18,7 @@ router.post('/new', checkAuth, isAdmin, categoryController.newCategory);
 // @path    PATCH /categories/edit/:categoryId
 // @desc    Edit category
 // @access  Private + admin
-router.patch('/edit/:categoryId', checkAuth, isAdmin, categoryController.updateCategory);
+// router.patch('/edit/:categoryId', checkAuth, isAdmin, categoryController.updateCategory);
 
 // @path    DELETE /categories/delete/:categoryId
 // @desc    Delete Category
