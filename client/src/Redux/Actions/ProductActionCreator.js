@@ -60,3 +60,36 @@ export const createProduct = (name, description, price, category, quantity, prod
         }
     }
 }
+
+export const getAllProducts = () => async (dispatch) => {
+
+    try{
+        const res = await axios.get('/product');
+        console.log(res.data);
+
+        dispatch({
+            type: actionTypes.GET_ALL_PRODUCTS,
+            payload: res.data
+        });
+
+        return {
+            status: 'success'
+        }
+
+    }catch(err){
+        console.log(err.response);
+        dispatch({
+            type: actionTypes.ERR,
+            payload: err.response.data.error
+        });
+        setTimeout(() => {
+            dispatch({
+                type: actionTypes.CLEAR_ERR
+            });
+        }, 3000);
+        
+        return {
+            status: 'fail'
+        }
+    }
+}
