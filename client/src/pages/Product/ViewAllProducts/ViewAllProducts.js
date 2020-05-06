@@ -16,6 +16,26 @@ const ViewAllProducts = (props) => {
         // eslint-disable-next-line
     }, []);
 
+
+    const renderProducts = () => {
+        return props.products && props.products.map((product) => {
+            return (
+                <div key={product._id} className={styles.card}>
+                    <div className={styles.imgContainer}>
+                    <img className={styles.img} src={`/images/${product.productImageURL}`} alt="product img"/>
+                    </div>
+
+                    <p className={styles.name}>Name: {product.name}</p>
+                    <p className={styles.category}>Category: {product.category.name}</p>
+                    <p className={styles.price}>Price: ${product.price}</p>
+
+                    <div className={styles.link} onClick={() => props.history.push(`/products/${product._id}`)}>View</div>
+
+                </div>
+            );
+        });
+    }
+
     return (
 
         <div className={styles.container}>
@@ -24,49 +44,10 @@ const ViewAllProducts = (props) => {
                 <h1 className={styles.heading}>All Products</h1>
             </div>
 
-
             <div className={styles.cardContainer}>
 
-                <div className={styles.card}>
-                    <div className={styles.imgContainer}>
-                    <img className={styles.img} src="https://source.unsplash.com/random" alt=""/>
-                    </div>
-
-                    <p className={styles.name}>Name</p>
-                    <p className={styles.category}>Category</p>
-                    <p className={styles.price}>Price</p>
-
-                    <div className={styles.link}>View</div>
-
-                </div>
-
-                <div className={styles.card}>
-                    <div className={styles.imgContainer}>
-                        <img className={styles.img} src="https://source.unsplash.com/random" alt=""/>
-                    </div>
-
-                    <p className={styles.name}>Name</p>
-                    <p className={styles.category}>Category</p>
-                    <p className={styles.price}>Price</p>
-
-                    <div className={styles.link}>View</div>
-
-                </div>
-
-                <div className={styles.card}>
-                    <div className={styles.imgContainer}>
-                        <img className={styles.img} src="https://source.unsplash.com/random" alt=""/>
-                    </div>
-
-                    <p className={styles.name}>Name</p>
-                    <p className={styles.category}>Category</p>
-                    <p className={styles.price}>Price</p>
-
-                    <div className={styles.link}>View</div>
-
-                </div>
+                {renderProducts()}
                 
-
             </div>
             
         </div>
@@ -75,7 +56,7 @@ const ViewAllProducts = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-
+        products: state.products.products,
     }
 }
 

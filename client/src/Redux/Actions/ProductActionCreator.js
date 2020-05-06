@@ -93,3 +93,52 @@ export const getAllProducts = () => async (dispatch) => {
         }
     }
 }
+
+
+export const deleteProduct = (productId) => async (dispatch, getState) => {
+
+    const token = getState().auth.token;
+    if (!token){
+        return {
+            status: 'fail'
+        }
+    }
+
+    try{
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            }
+        }
+
+        const res = await axios.delete(`/product/delete/${productId}`, config);
+        console.log(res.data);
+
+        dispatch({
+            type: actionTypes.DELETE_PRODUCT,
+            payload: productId
+        });
+
+        return {
+            status: 'success'
+        }
+
+    }catch(err){
+        console.log(err.response);
+        dispatch({
+            type: actionTypes.ERR,
+            payload: err.response.data.error
+        });
+        setTimeout(() => {
+            dispatch({
+                type: actionTypes.CLEAR_ERR
+            });
+        }, 3000);
+        
+        return {
+            status: 'fail'
+        }
+
+    }
+}

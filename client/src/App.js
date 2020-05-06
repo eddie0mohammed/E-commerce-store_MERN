@@ -27,6 +27,8 @@ import CreateCategory from './pages/Categories/CreateCategory/CreateCategory';
 
 import CreateProduct from './pages/Product/CreateProduct/CreateProduct';
 import ViewAllProducts from './pages/Product/ViewAllProducts/ViewAllProducts';
+import ViewProduct from './pages/Product/ViewProduct/ViewProduct';
+import EditProduct from './pages/Product/EditProduct/EditProduct';
 
 
 const App = (props) => {
@@ -72,6 +74,8 @@ const App = (props) => {
         <AdminRoute path='/create/product' exact component={CreateProduct} />
 
         <Route path='/products' exact component={ViewAllProducts} />
+        <Route path='/products/:productId' exact component={ViewProduct} />
+        <Route path="/products/edit/:productId" exact component={EditProduct} />
 
 
 

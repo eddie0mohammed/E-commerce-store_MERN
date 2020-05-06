@@ -1,21 +1,13 @@
 import React, {useState, useRef, useEffect} from 'react';
 
-import styles from './CreateProduct.module.css';
+import styles from './EditProduct.module.css';
 
 import {connect} from 'react-redux';
 
 import * as categoriesActionCreators from '../../../Redux/Actions/CategoriesActionCreators';
 import * as productActionCreators from '../../../Redux/Actions/ProductActionCreator';
 
-const CreateProduct = (props) => {
-
-    useEffect(() => {
-        const getAllCategories = async () => {
-            await props.getAllCategories();
-        }
-        getAllCategories();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+const EditProduct = (props) => {
 
     const [image, setImage] = useState(null);
     const [values, setValues] = useState({
@@ -27,6 +19,38 @@ const CreateProduct = (props) => {
         quantity: '',
 
     });
+
+    useEffect(() => {
+        const getAllCategories = async () => {
+            await props.getAllCategories();
+        }
+        getAllCategories();
+
+        const fetchAllProducts = async () => {
+            await props.getAllProducts();
+        }
+
+        let productId = props.match.params.productId;
+        let product;
+        if (props.products.length === 0){
+            fetchAllProducts();
+            product = props.products.filter(elem => elem._id === productId)[0];
+            console.log(product);
+            // const {name, description, price, shipping, quantity} = product;
+            // const category = product.category.name;
+            // setValues({...values, name: name, desc: description, price: price, shipping: shipping, quantity: quantity, category: category});
+
+
+        }else{
+            product = props.products.filter(elem => elem._id === productId)[0];
+            const {name, description, price, shipping, quantity} = product;
+            const category = product.category.name;
+            setValues({...values, name: name, desc: description, price: price, shipping: shipping, quantity: quantity, category: category});
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    
 
     const fileInput = useRef();
 
@@ -44,14 +68,8 @@ const CreateProduct = (props) => {
         // console.log(image);
         
         const {name, desc, price, category, shipping, quantity} = values;
-        const res = await props.createProduct(name, desc, price, category, quantity, image, shipping);
-        // console.log(res);
-
-        if (res.status === 'success'){
-            props.history.push('/products');
-        }
-
-
+       
+        console.log(values);
     }
 
     const renderCategories = () => {
@@ -70,7 +88,7 @@ const CreateProduct = (props) => {
                 <h1 className={styles.heading}>New Product</h1>
 
                 <label htmlFor="name" className={styles.label}>Product Name</label>
-                <input className={styles.input} type="text" name='name' placeholder='Product Name' required onChange={handleInputChange}/>
+                <input className={styles.input} type="text" name='name' placeholder='Product Name' required value={values.name} onChange={handleInputChange}/>
 
                 <label htmlFor="image" className={styles.label}>Product Image</label>
                 <input type='file' ref={fileInput} className={styles.fileInput} name="image" onChange={handleImage} style={{display:'none'}}/>
@@ -78,23 +96,23 @@ const CreateProduct = (props) => {
                 {image && <div className={styles.fileName}>{image && image.name}</div>}
 
                 <label htmlFor="desc" className={styles.label}>Product Description</label>
-                <textarea className={styles.input} type="text" name='desc' placeholder='Product Description' rows='5' style={{resize:'none'}}  required onChange={handleInputChange}/>
+                <textarea className={styles.input} type="text" name='desc' placeholder='Product Description' rows='5' style={{resize:'none'}}  required value={values.desc} onChange={handleInputChange}/>
 
                 <label htmlFor="price" className={styles.label}>Price</label>
-                <input className={styles.input} type="text" name='price' placeholder='Price' required onChange={handleInputChange}/>
+                <input className={styles.input} type="text" name='price' placeholder='Price' required value={values.price} onChange={handleInputChange}/>
 
                 <label htmlFor="category" className={styles.label}>Category</label>
-                <select className={styles.select} name='category' onChange={handleInputChange}>
+                <select className={styles.select} name='category' value={values.category} onChange={handleInputChange}>
                     <option value='default' hidden>Category</option>
                     {renderCategories()}
                 </select>
 
                 <label htmlFor="quantity" className={styles.label}>Quantity</label>
-                <input className={styles.input} type="text" name='quantity' placeholder='Quantity' onChange={handleInputChange}/>
+                <input className={styles.input} type="text" name='quantity' placeholder='Quantity' value={values.quantity} onChange={handleInputChange}/>
 
 
                 <label htmlFor="shipping" className={styles.label}>Shipping</label>
-                <select className={styles.select} name="shipping" onChange={handleInputChange}>
+                <select className={styles.select} name="shipping" value={values.shipping} onChange={handleInputChange}>
                     <option value='default' hidden>Shipping</option>
                     <option value='yes' >Yes</option>
                     <option value='no' >No</option>
@@ -116,15 +134,17 @@ const mapStateToProps = (state) => {
     return {
         categories: state.categories.categories,
         error: state.error.error,
+        products: state.products.products,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getAllCategories: () => dispatch(categoriesActionCreators.getAllCategories()),
-        createProduct: (name, description, price, category, quantity, productImageUrl, shipping) => dispatch(productActionCreators.createProduct(name, description, price, category, quantity, productImageUrl, shipping)),
+        getAllProducts: () => dispatch(productActionCreators.getAllProducts()),
+        
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProduct);
