@@ -142,3 +142,76 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
 
     }
 }
+
+
+export const updateProduct = (productId, name, desc, price, category, shipping, quantity, image) => async (dispatch, getState) => {
+
+    const token = getState().auth.token;
+    if (!token){
+        return {
+            status: 'fail'
+        }
+    }
+
+    try{
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            }
+        }
+
+        const formData = new FormData();
+        if (name){
+            formData.append('name', name);
+        }
+        if (desc){
+            formData.append('description', desc);
+        }
+        if (price){
+            formData.append('price', parseInt(price));
+        }
+        if (category){
+            formData.append('category', category);
+        }
+        if (shipping){
+            formData.append('shipping', shipping === 'yes' ? true : false);
+        }
+        if (quantity){
+            formData.append('quantity', quantity ? parseInt(quantity): 0);
+        }
+        if (image){
+            formData.append('image', image);
+        }
+
+
+        const res = await axios.patch(`/product/edit/${productId}`, formData, config);
+        console.log(res.data);
+
+        dispatch({
+            type: actionTypes.UPDATE_PRODUCT,
+            payload: res.data
+        });
+
+        return {
+            status: 'success'
+        }
+
+
+    }catch(err){
+        console.log(err.response);
+        dispatch({
+            type: actionTypes.ERR,
+            payload: err.response.data.error.message
+        });
+        setTimeout(() => {
+            dispatch({
+                type: actionTypes.CLEAR_ERR
+            });
+        }, 3000);
+        
+        return {
+            status: 'fail'
+        }
+    }
+}

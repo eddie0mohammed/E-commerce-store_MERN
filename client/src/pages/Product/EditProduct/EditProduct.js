@@ -34,21 +34,16 @@ const EditProduct = (props) => {
         let product;
         if (props.products.length === 0){
             fetchAllProducts();
-            product = props.products.filter(elem => elem._id === productId)[0];
-            console.log(product);
-            // const {name, description, price, shipping, quantity} = product;
-            // const category = product.category.name;
-            // setValues({...values, name: name, desc: description, price: price, shipping: shipping, quantity: quantity, category: category});
-
 
         }else{
             product = props.products.filter(elem => elem._id === productId)[0];
             const {name, description, price, shipping, quantity} = product;
-            const category = product.category.name;
+            const category = product.category._id;
             setValues({...values, name: name, desc: description, price: price, shipping: shipping, quantity: quantity, category: category});
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [props.products.length]);
 
     
 
@@ -69,7 +64,15 @@ const EditProduct = (props) => {
         
         const {name, desc, price, category, shipping, quantity} = values;
        
-        console.log(values);
+        // console.log(values);
+        // console.log(image);
+        
+        const res = await props.updateProduct(props.match.params.productId, name, desc, price, category, shipping, quantity, image);
+        console.log(res);
+
+        if (res.status === 'success'){
+            props.history.push('/products');
+        }
     }
 
     const renderCategories = () => {
@@ -80,7 +83,8 @@ const EditProduct = (props) => {
         });
     }
 
-
+    // console.log(values);
+    
     return (
         <div className={styles.container}>
 
@@ -130,6 +134,7 @@ const EditProduct = (props) => {
 }
 
 
+
 const mapStateToProps = (state) => {
     return {
         categories: state.categories.categories,
@@ -142,6 +147,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getAllCategories: () => dispatch(categoriesActionCreators.getAllCategories()),
         getAllProducts: () => dispatch(productActionCreators.getAllProducts()),
+        updateProduct: (productId, name, desc, price, category, shipping, quantity, image) => dispatch(productActionCreators.updateProduct(productId, name, desc, price, category, shipping, quantity, image)),
         
     }
 }

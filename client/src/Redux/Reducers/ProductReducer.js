@@ -32,7 +32,18 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 products: updatedProd
             }
+        
+        case (actionTypes.UPDATE_PRODUCT):
+            const currentProduct = [...state.products].filter(elem => elem._id === action.payload.data.product._id)[0];
+            const productIndex = state.products.findIndex(elem => elem._id === currentProduct._id);
+            const arr = [...state.products];
+            arr[productIndex] = action.payload.data.product;
+            return {
+                ...state,
+                products: arr
 
+            }
+        
 
         default:
             return state
