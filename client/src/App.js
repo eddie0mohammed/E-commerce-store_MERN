@@ -30,6 +30,9 @@ import ViewAllProducts from './pages/Product/ViewAllProducts/ViewAllProducts';
 import ViewProduct from './pages/Product/ViewProduct/ViewProduct';
 import EditProduct from './pages/Product/EditProduct/EditProduct';
 
+import Shop from './pages/Shop/Shop';
+import Cart from './pages/Cart/Cart';
+
 
 const App = (props) => {
 
@@ -76,6 +79,11 @@ const App = (props) => {
         <Route path='/products' exact component={ViewAllProducts} />
         <Route path='/products/:productId' exact component={ViewProduct} />
         <Route path="/products/edit/:productId" exact component={EditProduct} />
+
+        <Route path='/shop' exact component={Shop} />
+
+        <Route path='/cart' exact component={Cart} />
+        
 
 
 

@@ -24,6 +24,11 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 
+export const ADD_TO_CART = 'ADD_TO_CART';
+
+export const INC = 'INC';
+export const DEC = 'DEC';
+export const REMOVE = 'REMOVE';
 
 
 

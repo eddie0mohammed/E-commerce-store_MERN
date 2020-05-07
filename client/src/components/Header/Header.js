@@ -29,7 +29,11 @@ const Header = (props) => {
                     :
                     <>
                     { props.user && props.user.role === 0 && <NavLink to='/user/dashboard' className={styles.link} activeClassName={styles.isActive}>Dashboard</NavLink> }
+                    { props.user && props.user.role === 0 && <NavLink to='/shop' className={styles.link} activeClassName={styles.isActive}>Shop</NavLink> }
+                    { props.user && props.user.role === 0 && <NavLink to='/cart' className={styles.link} activeClassName={styles.isActive}>Cart</NavLink> }
                     { props.user && props.user.role === 1 && <NavLink to='/admin/dashboard' className={styles.link} activeClassName={styles.isActive}>Dashboard</NavLink> }
+        
+                   
                     <NavLink to='/auth/settings' className={styles.link} activeClassName={styles.isActive} >Settings</NavLink>
                     <div className={styles.link} onClick={handleLogout}>Logout</div>
                     </>

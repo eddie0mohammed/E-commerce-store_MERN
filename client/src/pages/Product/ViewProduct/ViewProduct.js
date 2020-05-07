@@ -5,10 +5,12 @@ import styles from './ViewProduct.module.css';
 import {connect} from 'react-redux';
 
 import * as productActionCreators from '../../../Redux/Actions/ProductActionCreator';
+import * as cartActionCreators from '../../../Redux/Actions/CartActionCreators';
 
 const ViewProduct = (props) => {
 
     const [product, setProduct] = useState(null);
+    const [msg, setMsg] = useState('');
 
     useEffect(() => {
 
@@ -41,6 +43,15 @@ const ViewProduct = (props) => {
         }
     }
 
+    const handleAddToCart = () => {
+        props.addToCart(product);
+
+        setMsg('Successfully added to cart');
+        setTimeout(() => {
+            setMsg('');
+        }, 2000);
+    }
+
     return (
         <div className={styles.container}>
 
@@ -67,7 +78,10 @@ const ViewProduct = (props) => {
                     <div className={styles.link2} onClick={handleDelete}>Delete</div>
                 </>
                 :
-                <div className={styles.link}>Add to Cart</div>
+                <>
+                    <p style={{textAlign:'center', fontSize: '1.8rem', color: 'green'}}>{msg}</p>
+                    <div className={styles.link} onClick={handleAddToCart}>Add to Cart</div>
+                </>
                 }
             </div>
             
@@ -87,6 +101,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getAllProducts: () => dispatch(productActionCreators.getAllProducts()),
         deleteProduct: (productId) => dispatch(productActionCreators.deleteProduct(productId)),
+        addToCart: (product) => dispatch(cartActionCreators.addToCart(product)),
     }
 }
 
