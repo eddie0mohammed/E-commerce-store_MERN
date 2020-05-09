@@ -50,7 +50,7 @@ const Cart = (props) => {
 
             <div className={styles.head}>
                 <h1 className={styles.heading}>Cart</h1>
-                <div className={styles.checkout}>Checkout</div>
+                <div className={styles.checkout} onClick={() => props.history.push('/checkout')}>Checkout</div>
             </div>
 
             <div className={styles.cartComponent}>

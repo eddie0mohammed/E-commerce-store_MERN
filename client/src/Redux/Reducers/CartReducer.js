@@ -41,6 +41,14 @@ const cartReducer = (state = initialState, action) => {
                 cartItems: updatCart
             }
 
+        case (actionTypes.CLEAR_CART_ITEMS):
+            localStorage.setItem('cartItems', JSON.stringify([]));
+            return {
+                ...state, 
+                cartItems: []
+            }
+
+
 
         default: 
             return state

@@ -1,0 +1,48 @@
+.container{
+    width: 100%;
+
+}
+
+.head{
+    width: 100%;
+    background: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 0;
+    position: relative;
+}
+
+.heading{
+    font-size: 3rem;
+}
+
+.DropInContainer{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.loading{
+    text-align: center;
+}
+
+.btn{
+    width: 100%;
+    font-size: 1.6rem;
+    color: white;
+    background: green;
+    padding: 1rem;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.details{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.total{
+    margin-top: 2rem;
+}

@@ -25,10 +25,15 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const CLEAR_CART_ITEMS = 'CLEAR_CART_ITEMS';
 
 export const INC = 'INC';
 export const DEC = 'DEC';
 export const REMOVE = 'REMOVE';
+
+
+export const GET_PAYMENT_TOKEN = 'GET_PAYMENT_TOKEN';
+export const PROCESS_PAYMENT = 'PROCESS_PAYMENT';
 
 
 

@@ -13,6 +13,7 @@ dotenv.config({path: './config.env'});
 const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const productRouter = require('./routes/product');
+const paymentRouter = require('./routes/payment');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use('/images' , express.static(path.join(__dirname, 'public', 'productImages
 app.use('/auth', authRouter);
 app.use('/categories', categoryRouter);
 app.use('/product', productRouter);
+app.use('/payment', paymentRouter);
 
 
 
