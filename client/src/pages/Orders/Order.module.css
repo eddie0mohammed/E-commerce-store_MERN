@@ -1,0 +1,52 @@
+
+.container{
+    width: 100%;
+
+}
+
+.head{
+    width: 100%;
+    background: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 0;
+}
+
+.heading{
+    font-size: 3rem;
+}
+
+.mainContainer{
+    width: 95%;
+    margin: 1rem auto;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.header__row{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: lightgray;
+}
+
+.content{
+    font-size: 1.8rem;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.row:not(:last-child){
+    border-bottom: 1px solid lightgray;
+}
+
+.h2{
+    text-align: center;
+}

@@ -14,6 +14,7 @@ const authRouter = require('./routes/auth');
 const categoryRouter = require('./routes/category');
 const productRouter = require('./routes/product');
 const paymentRouter = require('./routes/payment');
+const orderRouter = require('./routes/order');
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use('/auth', authRouter);
 app.use('/categories', categoryRouter);
 app.use('/product', productRouter);
 app.use('/payment', paymentRouter);
+app.use('/order', orderRouter);
 
 
 

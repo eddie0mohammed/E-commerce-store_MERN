@@ -34,6 +34,8 @@ import Shop from './pages/Shop/Shop';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
 
+import Orders from './pages/Orders/Order';
+
 
 const App = (props) => {
 
@@ -86,6 +88,8 @@ const App = (props) => {
         <Route path='/cart' exact component={Cart} />
 
         <Route path='/checkout' exact component={Checkout} />
+
+        <AdminRoute path='/orders'exact component={Orders} />
         
 
 

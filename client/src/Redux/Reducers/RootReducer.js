@@ -7,6 +7,7 @@ import categoriesReducer from './CategoryReducer';
 import productReducer from './ProductReducer';
 import cartReducer from './CartReducer';
 import paymentReducer from './ProductReducer';
+import orderReducer from './OrderReducer';
 
 const rootReducer = combineReducers({
 
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     categories: categoriesReducer,
     products: productReducer,
     cartReducer: cartReducer,
-    payment: paymentReducer
+    payment: paymentReducer,
+    orders: orderReducer
 
 });
 

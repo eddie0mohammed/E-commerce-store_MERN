@@ -36,8 +36,13 @@ export const GET_PAYMENT_TOKEN = 'GET_PAYMENT_TOKEN';
 export const PROCESS_PAYMENT = 'PROCESS_PAYMENT';
 
 
+export const CREATE_ORDER = 'CREATE_ORDER';
 
 
 
 export const ERR = 'ERR';
 export const CLEAR_ERR = 'CLEAR_ERR';
+
+
+export const GET_USER_ORDERS = 'GET_USER_ORDERS';
+export const GET_ALL_ORDERS = 'GET_ALL_ORDERS';

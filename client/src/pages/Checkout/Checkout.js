@@ -7,6 +7,7 @@ import DropIn from 'braintree-web-drop-in-react';
 
 import * as paymentActionCreators from '../../Redux/Actions/PaymentActionCreators';
 import * as cartActionCreators from '../../Redux/Actions/CartActionCreators';
+import * as orderActionCreators from '../../Redux/Actions/OrderActionCreators';
 
 const Checkout = (props) => {
 
@@ -70,6 +71,8 @@ const Checkout = (props) => {
         return total;
     }
 
+    
+
     const handlePayment = async () => {
         //send nonce to the server
         //nonce is equal to data.instance.requestPaymentMethod()
@@ -112,14 +115,23 @@ const Checkout = (props) => {
             }
 
             props.processPayment(paymentData)
-                .then(res => {
+                .then(async (res) => {
                     // console.log(res.data)
                     setData({...data, success: res.data.success});
                     
+                    const orderData = {
+                        products: props.cartItems,
+                        amount: calculateTotal(),
+                        transactionId: res.data.transaction.id
+                    }
+                    //create order
+                    await props.createOrder(orderData);
+                    
+                    
                     //empty cart 
                     props.clearCartItems();
-                    //create order
 
+                    props.history.push('/user/dashboard');
                 })
                 .catch(err => console.log(err));
 
@@ -161,7 +173,8 @@ const Checkout = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        cartItems: state.cartReducer.cartItems
+        cartItems: state.cartReducer.cartItems,
+        
     }
 }
 
@@ -169,7 +182,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getPaymentToken: () => dispatch(paymentActionCreators.getPaymentToken()),
         processPayment: (paymentData) => dispatch(paymentActionCreators.processPayment(paymentData)),
-        clearCartItems: () => dispatch(cartActionCreators.clearCartItems())
+        clearCartItems: () => dispatch(cartActionCreators.clearCartItems()),
+        createOrder: (orderData) => dispatch(orderActionCreators.createOrder(orderData)),
+
     }
 }
 

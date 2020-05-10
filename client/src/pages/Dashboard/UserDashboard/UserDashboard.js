@@ -5,6 +5,8 @@ import styles from './UserDashboard.module.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import * as orderActionCreators from '../../../Redux/Actions/OrderActionCreators';
+
 const UserDashboard = (props) => {
 
 
@@ -14,6 +16,33 @@ const UserDashboard = (props) => {
             props.history.push('/admin/dashboard');
         }
     });
+
+    useEffect(() => {
+        props.getUserOrders();
+        // eslint-disable-next-line
+    }, []); 
+
+
+    const renderOrders = () => {
+        if (props.orders.length > 0){
+            return (
+              
+                props.orders.map((elem, i) => {
+                    return (
+                        <div key={elem._id} className={`${styles.row} ${styles.content}` }>
+                            <p>{i + 1}. {elem._id}</p>
+                            <p>{elem.createdAt.split('T')[0]}</p>
+                            <p>{elem.status}</p>
+
+                        </div>
+                    )
+                })
+            );
+
+        }else{
+            return <p className={styles.content}>No orders found</p>
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -49,7 +78,8 @@ const UserDashboard = (props) => {
                         <div className={styles.table}>
 
                             <p className={styles.tableHead}>Purchase History</p>
-                            <p className={styles.content}>history</p>
+                            {/* <p className={styles.content}>history</p> */}
+                            {renderOrders()}
 
                         </div>
 
@@ -65,14 +95,15 @@ const UserDashboard = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        orders: state.orders.orders
     }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        getUserOrders: () => dispatch(orderActionCreators.getUserOrders()),
     }
 }
 
